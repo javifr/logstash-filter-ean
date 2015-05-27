@@ -24,7 +24,8 @@ class LogStash::Filters::Ean < LogStash::Filters::Base
     @logger.debug("Running ean filter", :event => event)
 
     @logger.debug("Adding key to string", :current_key => @key)
-    @to_ean = "#{event[@key]}"
+
+    @to_ean = event[@key]
 
     @logger.debug("Final string built", :to_ean => @to_ean)
 
@@ -32,7 +33,7 @@ class LogStash::Filters::Ean < LogStash::Filters::Base
 
     @logger.debug("Digested string", :digested_string => digested_string)
 
-    event[k] = digested_string
+    event[@key] = digested_string
   end
 
   public
