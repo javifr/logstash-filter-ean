@@ -2,20 +2,13 @@
 require "logstash/filters/base"
 require "logstash/namespace"
 
-# This filter let's you create a ean based on various parts
-# of the logstash event.
-# This can be useful for deduplication of messages or simply to provide
-# a custom unique identifier.
+# This filter lets you convert an event field ( that must be 12 strings character ) in to an Ean13 string with a checksum
+# This can be usefull if you need to output barcodes or some other sort of codes from a event field.
 #
-# This is VERY experimental and is largely a proof-of-concept
 class LogStash::Filters::Ean < LogStash::Filters::Base
 
-  # A list of keys to use in creating the string to ean
-  # Keys will be sorted before building the string
-  # keys and values will then be concatenated with pipe delimeters
-  # and eanmed
+  # The key you'll eanize ( under the EAN 13 standard )
   config :key, :validate => :string, :default => "message"
-
 
   public
   def register
@@ -29,7 +22,7 @@ class LogStash::Filters::Ean < LogStash::Filters::Base
     @logger.debug("Running ean filter", :event => event)
 
     @logger.debug("Adding key to string", :current_key => @key)
-    @to_ean << "#{event[@key]}"
+    @to_ean = "#{event[@key]}"
 
     @logger.debug("Final string built", :to_ean => @to_ean)
 
@@ -67,4 +60,4 @@ class LogStash::Filters::Ean < LogStash::Filters::Base
 
   end
 
-end # class LogStash::Filters::Checksum
+end # class LogStash::Filters::Ean
