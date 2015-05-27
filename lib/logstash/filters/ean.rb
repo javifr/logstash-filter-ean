@@ -7,6 +7,8 @@ require "logstash/namespace"
 #
 class LogStash::Filters::Ean < LogStash::Filters::Base
 
+  config_name "ean"
+
   # The key you'll eanize ( under the EAN 13 standard )
   config :key, :validate => :string, :default => "message"
 
