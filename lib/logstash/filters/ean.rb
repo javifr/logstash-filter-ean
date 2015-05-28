@@ -39,6 +39,7 @@ class LogStash::Filters::Ean < LogStash::Filters::Base
   public
   def eanize(twelve)
 
+    twelve = twelve.to_s
     return "" unless twelve.length == 12 && twelve.match(/\d{11}/)
 
     arr = (0..11).to_a.collect do |i|
